@@ -80,8 +80,11 @@ public class Window {
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         
 
+        /**
+         * Os callback do keyListener ficam abaixo
+         */
 
-
+         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback); //eu realmente preciso relembrar lambda, no caso essa parte em especifico 
 
 
 		glfwMakeContextCurrent(glfwWindow);
