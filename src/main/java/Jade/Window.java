@@ -1,5 +1,5 @@
 package Jade;
-import org.lwjgl.glfw.GLFWErrorCallback;
+
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
@@ -8,8 +8,10 @@ import org.lwjgl.system.MemoryStack;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
+
+import org.lwjgl.glfw.GLFWErrorCallback;
 
 
 import java.nio.IntBuffer;
@@ -45,6 +47,10 @@ public class Window {
         System.out.println("hello LWJGl" + Version.getVersion());
         init();
         loop();
+       
+
+
+        
     }
 
     public void init(){
@@ -64,16 +70,26 @@ public class Window {
 		glfwWindow = glfwCreateWindow(this.width, this.width, this.title, NULL, NULL);
 		if ( glfwWindow == NULL ) throw new RuntimeException("Failed to create the GLFW window");
 
+
+        /**
+         * os callback do mouse listener ficaram aqui
+         */
+
+        glfwSetCursorPosCallback(glfwWindow, MouseListener:: mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener:: mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        
+
+
+
+
+
 		glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1); //vsinc??  
 
         glfwShowWindow(glfwWindow);
 
-
-        /**
-         *   
-         *
-         */        
+        
         GL.createCapabilities();
          
 
@@ -86,7 +102,7 @@ public class Window {
         while(!glfwWindowShouldClose(glfwWindow)){
 
             glfwPollEvents();
-            glClearColor(1.0f, 0.0f, 0.0f,1.0f);
+            glClearColor(1.0f, 1.0f, 1.0f,1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             glfwSwapBuffers(glfwWindow);
