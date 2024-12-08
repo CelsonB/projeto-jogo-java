@@ -25,13 +25,19 @@ public class Window {
     private int width, height;
     private long glfwWindow; // recebe um long que é o espaço de memoria 
     private String title;
-
     private static Window window = null ;
+
+
+    private float r,g,b,a;
 
     private Window(){
         this.width = 1920;
         this.height = 1080;
         this.title = "mario";
+        r = 0 ; 
+        g = 0 ; 
+        b = 0 ; 
+        a = 0 ; 
     }
 
     public static Window getInstance(){
@@ -91,8 +97,6 @@ public class Window {
         glfwSwapInterval(1); //vsinc??  
 
         glfwShowWindow(glfwWindow);
-
-        
         GL.createCapabilities();
          
 
@@ -105,10 +109,14 @@ public class Window {
         while(!glfwWindowShouldClose(glfwWindow)){
 
             glfwPollEvents();
-            glClearColor(1.0f, 1.0f, 1.0f,1.0f);
+            glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
             glfwSwapBuffers(glfwWindow);
+
+
+               
+
 
 
 
