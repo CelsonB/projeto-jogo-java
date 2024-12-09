@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
+import util.Time;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -16,6 +17,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 
 import java.nio.IntBuffer;
 
+import org.joml.Math;
 import org.lwjgl.Version;
 
 public class Window {
@@ -27,8 +29,10 @@ public class Window {
     private String title;
     private static Window window = null ;
 
-
+    //cores
     private float r,g,b,a;
+    private boolean fadeToBlack = false;
+
 
     private Window(){
         this.width = 1920;
@@ -105,19 +109,42 @@ public class Window {
 
     }
 
+
+
+
     public void loop(){
+        float beginTime = Time.getTime();
+        float endTime =  Time.getTime();
+
         while(!glfwWindowShouldClose(glfwWindow)){
 
             glfwPollEvents();
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            
+
+
+            if(fadeToBlack)
+            {
+                r = Math.max(r- 0.01f, 0);
+                g = Math.max(g- 0.01f, 0);
+                b = Math.max(b- 0.01f, 0);
+            }
+            
+            
+            
+            if(KeyListener.isKeyPressed(GLFW_KEY_SPACE))
+            {
+                fadeToBlack = true; 
+            }
+
             glfwSwapBuffers(glfwWindow);
+            
 
-
-               
-
-
+            endTime = Time.getTime();
+            float dt =  endTime - beginTime;
+            beginTime = endTime; 
 
 
         }
